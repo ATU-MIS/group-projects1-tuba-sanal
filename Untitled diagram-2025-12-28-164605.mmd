@@ -1,0 +1,22 @@
+sequenceDiagram
+    actor User
+    participant UI as Web Arayüzü (Dashboard)
+    participant Server as Backend (Uygulama Sunucusu)
+    participant DB as Veritabanı
+
+    User->>UI: Kaynak ekle butonuna tıklar
+    UI->>User: Kaynak ekleme formunu göster
+
+    User->>UI: Ders adı, açıklama\nve dosya yükler
+    UI->>Server: Kaynak ekleme isteği gönder
+
+    Server->>Server: Veri doğrulama
+    alt Bilgiler geçerli
+        Server->>DB: Kaynak bilgilerini kaydet
+        DB-->>Server: Kayıt başarılı
+        Server-->>UI: Başarılı mesajı
+        UI-->>User: Kaynak eklendi
+    else Bilgiler hatalı
+        Server-->>UI: Hata mesajı
+        UI-->>User: Eksik / hatalı bilgi uyarısı
+    end
